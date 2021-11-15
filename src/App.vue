@@ -1,26 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <WalletProvider :wallets="wallets">
+    <Home
+      :treasury="treasury"
+      :config="config"
+      :candyMachineId="candyMachineId"
+      :txTimeout="txTimeout"
+    />
+  </WalletProvider>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup lang="ts">
+import Home from './components/Home.vue'
+import * as anchor from '@project-serum/anchor'
+import { WalletProvider } from '@solana/wallet-adapter-vue'
+import {
+  getPhantomWallet,
+  getSolletWallet,
+} from '@solana/wallet-adapter-wallets'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const wallets = [getPhantomWallet(), getSolletWallet()]
+
+const treasury = new anchor.web3.PublicKey(
+  process.env.VUE_APP_TREASURY_ADDRESS!,
+)
+
+const config = new anchor.web3.PublicKey(
+  process.env.VUE_APP_CANDY_MACHINE_CONFIG!,
+)
+
+const candyMachineId = new anchor.web3.PublicKey(
+  process.env.VUE_APP_CANDY_MACHINE_ID!,
+)
+
+const txTimeout = 30000 // milliseconds (confirm this works for your project)
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
