@@ -32,7 +32,7 @@ This is a unix time stamp that configures when your mint will be open.
 
 This identifies the Solana network you want to connect to. Options are devnet, testnet, and mainnet.
 
-``REACT_APP_SOLANA_RPC_HOST=https://explorer-api.devnet.solana.com``
+``VUE_APP_SOLANA_RPC_HOST=https://explorer-api.devnet.solana.com``
 
 This identifies the RPC server your web app will access the Solana network through.
 
