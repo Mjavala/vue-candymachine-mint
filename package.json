@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "format": "prettier src --write"
+    "lint": "vue-cli-service lint && prettier src --write"
   },
   "dependencies": {
     "@project-serum/anchor": "^0.18.0",
