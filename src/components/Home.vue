@@ -9,10 +9,8 @@ import {
   mintOneToken,
 } from '../candyMachine'
 import { onMounted, defineProps } from '@vue/runtime-core'
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-vue'
 
-// @ts-ignore
-import { whitelist } from '../constants/whitelist.ts'
 
 const props = defineProps({
   candyMachineId: anchor.web3.PublicKey,
@@ -23,8 +21,8 @@ const props = defineProps({
 
 // eslint-disable-next-line no-unused-vars
 let connection: web3.Connection | null = null
-let walletConnected = ref(false)
-let wallet = new PhantomWalletAdapter();
+const anchorWallet = useAnchorWallet();
+const {connected} = useWallet();
 let isSoldOut = ref(false)
 let isMinting = ref(false)
 let isActive = ref(false)
@@ -43,28 +41,12 @@ const connectChain = () => {
   return new anchor.web3.Connection(process.env.VUE_APP_SOLANA_RPC_HOST!)
 }
 
-const connectWallet = async () => {
-  console.log(wallet)
-  await wallet.connect();
-};
-
-wallet.on('connect', async () => {
-  walletConnected.value = true
-  //await refreshCandyMachineState()
-})
-
-wallet.on('disconnect', () => {
-  walletConnected.value = false
-})
-
 const refreshCandyMachineState = async () => {
-  (async () => {
-    if (!wallet) return
-    if (!connection) return
+  try {
     await getCandyMachineState(
-      wallet as unknown as anchor.Wallet,
+      anchorWallet.value! as anchor.Wallet,
       props.candyMachineId,
-      connection,
+      connection!,
     )?.then((data) => {
       candyMachine = data?.candyMachine
       itemsAvailable.value = data?.itemsAvailable!
@@ -74,19 +56,22 @@ const refreshCandyMachineState = async () => {
 
       isSoldOut.value = itemsRemaining.value === 0
     })
-  })()
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 const onMint = async () => {
   // check if wallet address is whitelisted
   // add toast on return to tell people they are not on the whitelist
+  await refreshCandyMachineState();
   try {
     isMinting.value = true
-    if (wallet && candyMachine?.program) {
+    if (anchorWallet.value && candyMachine?.program) {
       const mintTxId = await mintOneToken(
         candyMachine,
         props.config,
-        wallet.publicKey!,
+        anchorWallet.value.publicKey,
         props.treasury,
       )
 
@@ -131,12 +116,8 @@ const onMint = async () => {
 
 <template>
   <div class="right">
-    <span v-if="!walletConnected">
-      <button @click="connectWallet()">connect</button>
-    </span>
-
     <button
-      v-if="walletConnected"
+      v-if="connected"
       :disabled="isSoldOut || isMinting || isActive"
       @click="onMint"
     >

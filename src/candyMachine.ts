@@ -84,7 +84,7 @@ export const awaitTransactionSignatureConfirmation = async (
       console.error('ws error in setup', txid, e)
     }
     while (!done && queryStatus) {
-      ;(async () => {
+      (async () => {
         try {
           const signatureStatuses = await connection.getSignatureStatuses([
             txid,
@@ -156,6 +156,7 @@ export const getCandyMachineState = async (
   candyMachineId: anchor.web3.PublicKey,
   connection: anchor.web3.Connection,
 ): Promise<CandyMachineState | null> => {
+  console.log(anchorWallet)
   const provider = new anchor.Provider(connection, anchorWallet, {
     preflightCommitment: 'recent',
   })
@@ -248,9 +249,6 @@ export const mintOneToken = async (
   const rent = await connection.getMinimumBalanceForRentExemption(
     MintLayout.span,
   )
-
-  console.log(program)
-  console.log(program.rpc)
 
   return await program.rpc.mintNft({
     accounts: {
