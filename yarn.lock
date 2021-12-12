@@ -1263,6 +1263,11 @@
     "@types/keccak" "^3.0.1"
     "@types/readable-stream" "^2.3.11"
 
+"@solana/wallet-adapter-vue-ui@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@solana/wallet-adapter-vue-ui/-/wallet-adapter-vue-ui-0.1.1.tgz#c7818a43b6ca3cb8850faed40e9970447da4abe5"
+  integrity sha512-JF68SdLm89oc3Dw+3xnsRCsF4gQpgs7VfEytzteVJInip+Tad2sSG3K7eaHjGvD9vqezZLtelzkLA/HKv3lAcA==
+
 "@solana/wallet-adapter-vue@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@solana/wallet-adapter-vue/-/wallet-adapter-vue-0.3.1.tgz#639b88a1712447f49172acf6cef21f9e072fd09d"

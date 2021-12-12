@@ -1,7 +1,7 @@
 <template>
   <WalletProvider :wallets="wallets" auto-connect>
     <wallet-modal-provider>
-        <wallet-multi-button></wallet-multi-button>
+      <wallet-multi-button></wallet-multi-button>
     </wallet-modal-provider>
     <Home
       :treasury="treasury"
@@ -20,7 +20,10 @@ import {
   getPhantomWallet,
   getSolletWallet,
 } from '@solana/wallet-adapter-wallets'
-import { WalletMultiButton, WalletModalProvider } from '@solana/wallet-adapter-vue-ui';
+import {
+  WalletMultiButton,
+  WalletModalProvider,
+} from '@solana/wallet-adapter-vue-ui'
 
 const wallets = [getPhantomWallet(), getSolletWallet()]
 

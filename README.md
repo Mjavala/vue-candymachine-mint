@@ -4,8 +4,6 @@ This repo is a modified version of Exiled Apes [candymachine](https://github.com
 
 Personally I don't like react, so I've wanted an alternative for a while.
 
-Unfortunately the react ui [components](https://www.npmjs.com/package/@solana/wallet-adapter-react-ui-starter) are not usable here, so I've only implemented Sollet and Phantom wallets as radio buttons, heavily inspired by [ravoken](https://github.com/2501babe/revoken).
-
 **This has only been tested on Devnet**
 
 ## Environment variables

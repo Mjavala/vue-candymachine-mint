@@ -11,7 +11,6 @@ import {
 import { onMounted, defineProps } from '@vue/runtime-core'
 import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-vue'
 
-
 const props = defineProps({
   candyMachineId: anchor.web3.PublicKey,
   treasury: anchor.web3.PublicKey,
@@ -21,8 +20,8 @@ const props = defineProps({
 
 // eslint-disable-next-line no-unused-vars
 let connection: web3.Connection | null = null
-const anchorWallet = useAnchorWallet();
-const {connected} = useWallet();
+const anchorWallet = useAnchorWallet()
+const { connected } = useWallet()
 let isSoldOut = ref(false)
 let isMinting = ref(false)
 let isActive = ref(false)
@@ -64,7 +63,7 @@ const refreshCandyMachineState = async () => {
 const onMint = async () => {
   // check if wallet address is whitelisted
   // add toast on return to tell people they are not on the whitelist
-  await refreshCandyMachineState();
+  await refreshCandyMachineState()
   try {
     isMinting.value = true
     if (anchorWallet.value && candyMachine?.program) {
